@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ArmorPiece, ArmorPieceSkill, Skill } from "@prisma/client";
+import { ArmorPiece, ArmorPieceSkill } from "@prisma/client";
 
 interface ArmorBuildState {
   armor: ArmorPiece[];
