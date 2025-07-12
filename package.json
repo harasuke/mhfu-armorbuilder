@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "rm -rf .next && rm -rf node_modules/.cache && npm run buildnpx prisma generate && next build",
+    "build": "rm -rf .next && rm -rf node_modules/.cache && npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
