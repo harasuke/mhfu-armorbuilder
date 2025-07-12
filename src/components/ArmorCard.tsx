@@ -18,12 +18,12 @@ export const ArmorCard = ({ className, armorPiece }: ArmorCardProps) => {
         <ArmorInteractionButton armorPiece={armorPiece} />
       </div>
       <div className="mt-3 flex justify-evenly">
-        {Object.keys(armorPiece)
-          .filter((key) => key.includes("Res") || key.includes("defense"))
-          .map((key) => (
+        {(Object.keys(armorPiece) as (keyof ArmorPiece)[])
+          ?.filter((key) => key.includes("Res") || key.includes("defense"))
+          ?.map((key) => (
             <div key={key} className="flex flex-col items-center">
               <img key={key} src={key + ".png"} style={{ width: "1em" }}></img>
-              <span>{armorPiece[key]}</span>
+              <span>{armorPiece[`${key}`]}</span>
             </div>
           ))}
       </div>
