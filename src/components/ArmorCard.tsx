@@ -1,6 +1,7 @@
 import React from "react";
 import { ArmorPiece } from "@prisma/client";
 import { ArmorInteractionButton } from "./ArmorInteractionButton";
+import Image from "next/image";
 
 interface ArmorCardProps {
   className?: string;
@@ -22,7 +23,7 @@ export const ArmorCard = ({ className, armorPiece }: ArmorCardProps) => {
           ?.filter((key) => key.includes("Res") || key.includes("defense"))
           ?.map((key) => (
             <div key={key} className="flex flex-col items-center">
-              <img key={key} src={key + ".png"} style={{ width: "1em" }}></img>
+              <Image alt={key} src={"/" + key + ".png"} width={16} height={16} style={{ width: "1em" }}/>
               <span>{armorPiece[`${key}`]}</span>
             </div>
           ))}

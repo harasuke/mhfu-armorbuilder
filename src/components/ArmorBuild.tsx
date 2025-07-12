@@ -7,6 +7,7 @@ import {
   getOverallStats,
 } from "@/lib/features/armor-build/armorBuildSlice";
 import { shallowEqual } from "react-redux";
+import Image from "next/image";
 
 export const ArmorBuild = () => {
   const armorBuild = useAppSelector(
@@ -21,14 +22,16 @@ export const ArmorBuild = () => {
       <div className="flex gap-6">
         <div className="flex flex-col">
           {Object.entries(overallStats).map(([key, value]) => (
-            <div key={key} className="flex justify-between">
-              <img
-                src={key + ".png"}
-                aria-label={key}
+            <div key={key} className="flex justify-between items-center">
+              <Image
+                src={"/" + key + ".png"}
+                alt={key}
+                height={16}
+                width={16}
                 style={{
-                  height: "2rem",
+                  width: "2em",
                 }}
-              ></img>
+              />
               <p
                 style={{
                   color: value > 0 ? "green" : "red",
@@ -44,7 +47,7 @@ export const ArmorBuild = () => {
             <b>Skill points</b>
           </h3>
           {Object.entries(overallSkills)?.map(([key, value]) => (
-            <div key={key} className="flex justify-between">
+            <div key={key} className="flex justify-between gap-2">
               <p>
                 <b>{key}</b>
               </p>
