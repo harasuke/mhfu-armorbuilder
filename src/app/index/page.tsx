@@ -1,5 +1,4 @@
 import React from "react"
-import "./globals.css";
 // import Image from "next/image";
 
 export default function Index({}) {
