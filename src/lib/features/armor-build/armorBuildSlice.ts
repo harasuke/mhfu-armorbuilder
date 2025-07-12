@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ArmorPiece, ArmorPieceSkill } from "@prisma/client";
+import { ArmorPiece, ArmorPieceSkill, Skill } from "@prisma/client";
 
 interface ArmorBuildState {
   armor: ArmorPiece[];
@@ -29,19 +29,24 @@ const counterSlice = createSlice({
   },
 });
 
+type ArmorPieceWithSkills = (ArmorPiece & {
+  ArmorPieceSkill: (ArmorPieceSkill & {
+    Skill: Skill;
+  })[];
+})[];
+
 const armorState = (state: { armorbuild: ArmorBuildState }) =>
-  state.armorbuild.armor;
+  state.armorbuild.armor as unknown as ArmorPieceWithSkills;
+
 
 export const getOverallSkills = createSelector([armorState], (currentArmor) => {
-  const armorSkills: (ArmorPiece & ArmorPieceSkill)[][] = currentArmor.map(
-    (armor) => {
-      return armor.ArmorPieceSkill.map((pieceSkill) => {
-        return {
-          [pieceSkill.Skill.name]: pieceSkill.skillPoints,
-        };
-      });
-    }
-  );
+  const armorSkills = currentArmor.map((armor) => {
+    return armor.ArmorPieceSkill.map((pieceSkill) => {
+      return {
+        [pieceSkill.Skill.name]: pieceSkill.skillPoints,
+      };
+    });
+  });
 
   const sumOfSkill: Record<string, number> = {};
   armorSkills.flat().forEach((obj) => {
