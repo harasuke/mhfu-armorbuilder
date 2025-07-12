@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ArmorPiece {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  type               ArmorType
+  defense            Int                  @default(0)
+  slots              Int                  @default(0)
+  rarity             Int                  @default(0)
+  dragonRes          Int                  @default(0)
+  fireRes            Int                  @default(0)
+  iceRes             Int                  @default(0)
+  thunderRes         Int                  @default(0)
+  waterRes           Int                  @default(0)
+  hunterType         HunterType           @default(BLADE_GUNNER)
+  hr                 Int                  @default(0)
+  elder              Int                  @default(0)
+  price              Int                  @default(0)
+  gender             GenderType           @default(MALE_FEMALE)
+  ArmorPieceMaterial ArmorPieceMaterial[]
+  ArmorPieceSkill    ArmorPieceSkill[]
+}
+
+model ArmorPieceMaterial {
+  armorPieceId Int
+  materialId   Int
+  quantity     Int
+  id           Int        @unique @default(autoincrement())
+  ArmorPiece   ArmorPiece @relation(fields: [armorPieceId], references: [id])
+  Material     Material   @relation(fields: [materialId], references: [id])
+}
+
+model ArmorPieceSkill {
+  id           Int        @id @default(autoincrement())
+  armorPieceId Int
+  skillId      Int
+  skillPoints  Int
+  ArmorPiece   ArmorPiece @relation(fields: [armorPieceId], references: [id])
+  Skill        Skill      @relation(fields: [skillId], references: [id])
+}
+
+model Material {
+  id                 Int                  @id @default(autoincrement())
+  name               String               @unique
+  ArmorPieceMaterial ArmorPieceMaterial[]
+}
+
+model Skill {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  ArmorPieceSkill ArmorPieceSkill[]
+}
+
+enum ArmorType {
+  HEAD
+  CHEST
+  ARMS
+  WAIST
+  LEGS
+}
+
+enum GenderType {
+  MALE
+  FEMALE
+  MALE_FEMALE
+}
+
+enum HunterType {
+  BLADE
+  GUNNER
+  BLADE_GUNNER
+}
