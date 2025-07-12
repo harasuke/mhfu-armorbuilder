@@ -8,7 +8,7 @@ import {
 } from "@/lib/features/armor-build/armorBuildSlice";
 import { shallowEqual } from "react-redux";
 
-export const ArmorBuild = ({}: ArmorBuildProps) => {
+export const ArmorBuild = () => {
   const armorBuild = useAppSelector(
     (state) => state.armorbuild.armor,
     shallowEqual
