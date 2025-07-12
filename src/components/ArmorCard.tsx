@@ -1,39 +1,32 @@
-'use client'
 import React from "react";
 import { ArmorPiece } from "@prisma/client";
-import { useAppDispatch } from "@/lib/hooks";
-import {
-  addArmorPiece,
-  removeArmorPiece,
-} from "@/lib/features/armor-build/armorBuildSlice";
+import { ArmorInteractionButton } from "./ArmorInteractionButton";
 
 interface ArmorCardProps {
+  className?: string;
   armorPiece: ArmorPiece;
   actions?: string[];
 }
 
-export const ArmorCard = ({
-  armorPiece,
-  actions = ["add"],
-}: ArmorCardProps) => {
-  const dispatch = useAppDispatch();
-
+export const ArmorCard = ({ className, armorPiece }: ArmorCardProps) => {
   return (
-    <div className="flex flex-col">
-      <div className="flex">{armorPiece.name}</div>
-      {actions?.length &&
-        actions.map((action, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              if (action == "add") dispatch(addArmorPiece({ ...armorPiece }));
-              else if (action == "remove")
-                dispatch(removeArmorPiece({ ...armorPiece }));
-            }}
-          >
-            Do {action}
-          </button>
-        ))}
+    <div
+      className={`flex flex-col max-w-[500px] max-h-[350px] rounded-md border-1 ${className}`}
+    >
+      <div className="flex justify-between">
+        <p className="flex">{armorPiece.name}</p>
+        <ArmorInteractionButton armorPiece={armorPiece} />
+      </div>
+      <div className="mt-3 flex justify-evenly">
+        {Object.keys(armorPiece)
+          .filter((key) => key.includes("Res") || key.includes("defense"))
+          .map((key) => (
+            <div key={key} className="flex flex-col items-center">
+              <img key={key} src={key + ".png"} style={{ width: "1em" }}></img>
+              <span>{armorPiece[key]}</span>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

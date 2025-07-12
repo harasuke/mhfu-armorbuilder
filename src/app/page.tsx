@@ -8,10 +8,17 @@ export default async function Home() {
 
   return (
     <>
-      <ArmorBuild />
-      {armors.map((armor, index) => (
-        <ArmorCard key={index} armorPiece={armor} />
-      ))}
+      <div className="flex flex-col justify-around m-2">
+        <div className="flex flex-col">
+          <h3>Your current build</h3>
+          <ArmorBuild />
+        </div>
+        <div className="flex flex-wrap gap-4 mt-2">
+          {armors.map((armor, index) => (
+            <ArmorCard key={index} armorPiece={armor} className="w-full !max-w-[30%]"/>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
